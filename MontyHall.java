@@ -19,17 +19,37 @@
 
 public class MontyHall {
     public static void main(String[] args) {
-        // Calculate the probability of success when switching.
-        probSwitchSuccess();
+        System.out.println("By running a simulation of the Monty Hall problem");
+        System.out.print("we can see that ");
 
-        // Calculate the probability of success when not switching.
-        probNotSwitchSuccess();
-
-        // Compare the two probabilities.
-        compareProb(0, 0);
-
-        // Identify the more successful strategy.
-        betterStrategy(0, 0, 0);
+        int switchSuccess = probSwitchSuccess();
+        int notSwitchSuccess = probNotSwitchSuccess();
+        if (switchSuccess > notSwitchSuccess) {
+            System.out.println("SWITCHING is the better strategy.");
+            System.out.print("The player who always switches wins about ");
+            System.out.print(((double) switchSuccess) / 10);
+            System.out.print("% of the time, \nwhile the player who never ");
+            System.out.print("switches wins only about ");
+            System.out.print(((double) notSwitchSuccess) / 10);
+            System.out.print("% of the time.");
+        } else if (switchSuccess < notSwitchSuccess) {
+            System.out.println("NOT SWITCHING is the better strategy.");
+            System.out.print("The player who never switches wins about ");
+            System.out.print(((double) notSwitchSuccess) / 10);
+            System.out.print("% of the time, \nwhile the player who always ");
+            System.out.print("switches wins only about ");
+            System.out.print(((double) switchSuccess) / 10);
+            System.out.print("% of the time.");
+        } else {
+            System.out.println("both strategies are equally good.");
+            System.out.print("The player who always switches wins about ");
+            System.out.print(((double) switchSuccess) / 10);
+            System.out.print("% of the time, while the player who never ");
+            System.out.print("switches also wins about ");
+            System.out.print(((double) notSwitchSuccess) / 10);
+            System.out.print("% of the time.");
+        }
+        System.out.println();
     }
 
     // Calculate the probability of success when switching.
@@ -64,7 +84,7 @@ public class MontyHall {
             else
                 goat = 1; 
 
-            // The olayer switches to the other closed Door.
+            // The player switches to the other closed Door.
             if (goat == 1)
                 player = 2;
             else
@@ -90,22 +110,32 @@ public class MontyHall {
     // Calculate the probability of success when not switching.
     // @return int Probability of success permille.
     public static int probNotSwitchSuccess() {
-        return 0;
-    }
 
-    // Compare two probabilities.
-    // @param int First probability permille.
-    // @param int Second probability permille.
-    // @return int 0 if the first probability is greater, 1 if the second
-    public static int compareProb(int firstProb, int secondProb) {
-        return 0;
-    }
+        // Run the experiment 1000 times.
+        int success = 0;
+        int failure = 0;
 
-    // Identify the more successful strategy.
-    // @param int Strategy with higher probability.
-    // @param int First Probability permille.
-    // @param int Second Probability permille.
-    public static void betterStrategy (int betterStrategy, int firstProb,
-            int secondProb) {
+        for (int i = 0; i < 1000; i++) {
+
+            int sportscar;
+            sportscar = (int) (Math.random() * 3);
+            int player = 0;
+            int goat;
+            if (sportscar == 1)
+                goat = 2;
+            else
+                goat = 1;
+
+            // The player does not switch.
+
+            if (player == sportscar)
+                success++;
+            else
+                failure++;
+        }
+
+        assert(success + failure == 1000);
+
+        return success;
     }
 }
